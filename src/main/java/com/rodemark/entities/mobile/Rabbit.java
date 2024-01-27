@@ -1,7 +1,7 @@
 package com.rodemark.entities.mobile;
 
 import com.rodemark.base_entity.Herbivore;
-import com.rodemark.base_entity.Cell;
+import com.rodemark.entities.field.Cell;
 
 public class Rabbit extends Herbivore {
 

@@ -1,7 +1,9 @@
 package com.rodemark.base_entity;
 
+import com.rodemark.entities.field.Cell;
+
 public abstract class Entity {
-    private final Cell position;
+    private Cell position;
 
     public Entity(Cell position) {
         this.position = position;
@@ -9,6 +11,10 @@ public abstract class Entity {
 
     public Cell getPosition() {
         return position;
+    }
+
+    public void setPosition(Cell position) {
+        this.position = position;
     }
 
     public String getSymbol() {

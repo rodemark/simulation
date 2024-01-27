@@ -1,7 +1,7 @@
 package com.rodemark.entities.mobile;
 
 import com.rodemark.base_entity.Predator;
-import com.rodemark.base_entity.Cell;
+import com.rodemark.entities.field.Cell;
 
 public class Fox extends Predator {
     public Fox(Cell position) {

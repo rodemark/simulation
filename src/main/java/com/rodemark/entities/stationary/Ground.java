@@ -1,7 +1,7 @@
 package com.rodemark.entities.stationary;
 
 import com.rodemark.base_entity.Entity;
-import com.rodemark.base_entity.Cell;
+import com.rodemark.entities.field.Cell;
 
 public class Ground extends Entity {
 
