@@ -1,6 +1,7 @@
 package com.rodemark.entities.field;
 
 public record Cell(int x, int y) {
+
     @Override
     public int x() {
         return x;
@@ -11,3 +12,4 @@ public record Cell(int x, int y) {
         return y;
     }
 }
+

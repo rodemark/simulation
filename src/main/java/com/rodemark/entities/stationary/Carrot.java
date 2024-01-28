@@ -3,14 +3,14 @@ package com.rodemark.entities.stationary;
 import com.rodemark.base_entity.Entity;
 import com.rodemark.entities.field.Cell;
 
-public class Grass extends Entity {
+public class Carrot extends Entity {
 
-    public Grass(Cell position) {
+    public Carrot(Cell position) {
         super(position);
     }
 
     @Override
     public String getSymbol() {
-        return "\uD83D\uDFE9";
+        return "\uD83E\uDD55";
     }
 }

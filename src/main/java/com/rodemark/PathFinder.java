@@ -7,25 +7,24 @@ import com.rodemark.entities.field.WorldMap;
 import java.util.*;
 
 public class PathFinder {
-    public static List<Cell> findPath(WorldMap worldMap, Entity startEntity, Entity targetEntity) {
-        // Validate start and target entities
-        if (startEntity == null || targetEntity == null) {
+
+    // BFS
+    public static List<Cell> findPath(WorldMap worldMap, Entity startEntity, Entity endEntity) {
+        if (startEntity == null || endEntity == null) {
             throw new IllegalArgumentException("Start and target entities must not be null.");
         }
 
-        // Validate start and target positions
         Cell startCell = startEntity.getPosition();
-        Cell targetCell = targetEntity.getPosition();
-        if (startCell == null || targetCell == null) {
+        Cell endCell = endEntity.getPosition();
+
+        if (startCell == null || endCell == null) {
             throw new IllegalArgumentException("Start and target positions must not be null.");
         }
 
-        // Validate start and target entities are on the map
-        if (!worldMap.getEntities().containsKey(startCell) || !worldMap.getEntities().containsKey(targetCell)) {
+        if (!worldMap.getEntities().containsKey(startCell) || !worldMap.getEntities().containsKey(endCell)) {
             throw new IllegalArgumentException("Start and target entities must be on the map.");
         }
 
-        // Perform BFS to find the path
         Queue<Cell> queue = new LinkedList<>();
         HashMap<Cell, Cell> parentMap = new HashMap<>();
         Set<Cell> visited = new HashSet<>();
@@ -36,10 +35,9 @@ public class PathFinder {
         while (!queue.isEmpty()) {
             Cell currentCell = queue.poll();
 
-            if (currentCell.equals(targetCell)) {
-                // Reconstruct the path
+            if (currentCell.x() == endCell.x() && currentCell.y() == endCell.y()) {
                 List<Cell> path = new ArrayList<>();
-                Cell cell = targetCell;
+                Cell cell = endCell;
 
                 while (cell != null) {
                     path.add(cell);
@@ -50,7 +48,7 @@ public class PathFinder {
                 return path;
             }
 
-            List<Cell> neighbors = getValidNeighbors(worldMap, currentCell, visited);
+            List<Cell> neighbors = getValidNeighbors(worldMap, currentCell, visited, endEntity.getClass());
             for (Cell neighbor : neighbors) {
                 queue.add(neighbor);
                 visited.add(neighbor);
@@ -62,26 +60,29 @@ public class PathFinder {
         return Collections.emptyList();
     }
 
-    private static List<Cell> getValidNeighbors(WorldMap worldMap, Cell cell, Set<Cell> visited) {
+    private static List<Cell> getValidNeighbors(WorldMap worldMap, Cell cell, Set<Cell> visited, Class<? extends Entity> targetType) {
         List<Cell> neighbors = new ArrayList<>();
         int x = cell.x();
         int y = cell.y();
 
-        // Consider only up, down, left, and right neighbors
         int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 
         for (int[] direction : directions) {
             int newX = x + direction[0];
             int newY = y + direction[1];
-            Cell neighbor = new Cell(newX, newY);
 
-            if (worldMap.getEntities().containsKey(neighbor) && !visited.contains(neighbor)) {
-                neighbors.add(neighbor);
+            if (newX >= 0 && newX < worldMap.getWidth() && newY >= 0 && newY < worldMap.getHeight()) {
+                Cell neighbor = new Cell(newX, newY);
+                // если там нет никаких сущностей или там есть тот за кем охотимся
+                if ((!worldMap.getEntities().containsKey(neighbor) || targetType.isInstance(worldMap.getEntities().get(neighbor))) && !visited.contains(neighbor)) {
+                    neighbors.add(neighbor);
+                }
             }
         }
 
         return neighbors;
     }
+
 
     public static Entity findNearestEntity(WorldMap worldMap, Entity sourceEntity, Class<? extends Entity> targetType) {
         Entity nearestEntity = null;
