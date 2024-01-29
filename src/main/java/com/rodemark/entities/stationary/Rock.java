@@ -13,4 +13,6 @@ public class Rock extends Entity {
     public String getSymbol() {
         return "\uD83E\uDEA8";
     }
+
+
 }

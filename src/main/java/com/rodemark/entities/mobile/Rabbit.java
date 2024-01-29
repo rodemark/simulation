@@ -4,8 +4,12 @@ import com.rodemark.base_entity.Herbivore;
 import com.rodemark.entities.field.Cell;
 
 public class Rabbit extends Herbivore {
-    public Rabbit(Cell position, int health, int power) {
-        super(position, health, power);
+    private final static int RABBIT_HEALTH = 1;
+    private final static int RABBIT_SPEED = 2;
+    public Rabbit(Cell position) {
+        super(position);
+        this.health = RABBIT_HEALTH;
+        this.speed = RABBIT_SPEED;
     }
 
     @Override

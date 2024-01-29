@@ -3,9 +3,12 @@ package com.rodemark.base_entity;
 import com.rodemark.entities.field.Cell;
 
 public abstract class Predator extends Creature {
-    public Predator(Cell position, int health, int power) {
+    public Predator(Cell position) {
         super(position);
-        this.health = health;
-        this.power = power;
+    }
+
+    @Override
+    public String getSymbol() {
+        return null;
     }
 }

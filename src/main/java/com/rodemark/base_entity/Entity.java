@@ -12,12 +12,10 @@ public abstract class Entity {
     public Cell getPosition() {
         return position;
     }
-
     public void setPosition(Cell position) {
         this.position = position;
     }
 
-    public String getSymbol() {
-        return null;
-    }
+    public abstract String getSymbol();
+
 }

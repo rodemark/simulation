@@ -1,5 +1,6 @@
 package com.rodemark;
 
+import com.rodemark.base_entity.Creature;
 import com.rodemark.base_entity.Entity;
 import com.rodemark.entities.field.Cell;
 import com.rodemark.entities.field.WorldMap;
@@ -10,20 +11,8 @@ public class PathFinder {
 
     // BFS
     public static List<Cell> findPath(WorldMap worldMap, Entity startEntity, Entity endEntity) {
-        if (startEntity == null || endEntity == null) {
-            throw new IllegalArgumentException("Start and target entities must not be null.");
-        }
-
         Cell startCell = startEntity.getPosition();
         Cell endCell = endEntity.getPosition();
-
-        if (startCell == null || endCell == null) {
-            throw new IllegalArgumentException("Start and target positions must not be null.");
-        }
-
-        if (!worldMap.getEntities().containsKey(startCell) || !worldMap.getEntities().containsKey(endCell)) {
-            throw new IllegalArgumentException("Start and target entities must be on the map.");
-        }
 
         Queue<Cell> queue = new LinkedList<>();
         HashMap<Cell, Cell> parentMap = new HashMap<>();
@@ -64,6 +53,8 @@ public class PathFinder {
         List<Cell> neighbors = new ArrayList<>();
         int x = cell.x();
         int y = cell.y();
+
+        Creature creature = (Creature) worldMap.getEntityFromCell(cell);
 
         int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 

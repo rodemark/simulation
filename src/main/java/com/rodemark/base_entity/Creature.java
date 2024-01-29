@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class Creature extends Entity {
     protected int health;
-    protected int power;
+    protected int speed;
 
     public Creature(Cell position) {
         super(position);
@@ -22,6 +22,7 @@ public abstract class Creature extends Entity {
 
             if (!path.isEmpty() && path.size() > 1) {
                 Cell nextPosition = path.get(1);
+
                 worldMap.removeEntity(this);
                 this.setPosition(nextPosition);
                 worldMap.addEntity(this);
@@ -30,8 +31,11 @@ public abstract class Creature extends Entity {
                 worldMap.printMap();
                 System.out.println();
             } else {
-                System.out.println("Error");
+                System.out.println("Error. Path is empty. Creature.class.makeMove");
             }
+        }
+        else {
+            System.out.println("Error. The required entity is missing. Creature.class.makeMove");
         }
     }
 
