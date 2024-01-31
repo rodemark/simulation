@@ -4,8 +4,9 @@ import com.rodemark.base_entity.Herbivore;
 import com.rodemark.entities.field.Cell;
 
 public class Rabbit extends Herbivore {
-    private final static int RABBIT_HEALTH = 1;
-    private final static int RABBIT_SPEED = 2;
+    private static final int RABBIT_HEALTH = 5;
+    private static final int RABBIT_SPEED = 2;
+
     public Rabbit(Cell position) {
         super(position);
         this.health = RABBIT_HEALTH;
@@ -14,6 +15,6 @@ public class Rabbit extends Herbivore {
 
     @Override
     public String getSymbol(){
-        return "\uD83D\uDC07";
+        return "\uD83D\uDC30";
     }
 }

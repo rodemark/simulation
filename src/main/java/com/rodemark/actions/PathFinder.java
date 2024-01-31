@@ -1,4 +1,4 @@
-package com.rodemark;
+package com.rodemark.actions;
 
 import com.rodemark.base_entity.Creature;
 import com.rodemark.base_entity.Entity;
@@ -54,10 +54,16 @@ public class PathFinder {
         int x = cell.x();
         int y = cell.y();
 
-        Creature creature = (Creature) worldMap.getEntityFromCell(cell);
+        Entity entity = worldMap.getEntityFromCell(cell);
 
-        int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        int speed = 0;
+        if (entity instanceof Creature){
+            Creature creature = (Creature) worldMap.getEntityFromCell(cell);
+            speed = creature.getSpeed();
+        }
 
+
+        int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}, {0, speed}, {0, -speed}, {speed, 0}, {-speed, 0}};
         for (int[] direction : directions) {
             int newX = x + direction[0];
             int newY = y + direction[1];
