@@ -1,12 +1,8 @@
 package com.rodemark.actions;
 
-import com.rodemark.base_entity.Creature;
-import com.rodemark.base_entity.Entity;
-import com.rodemark.base_entity.Herbivore;
-import com.rodemark.base_entity.Predator;
+import com.rodemark.base_entity.*;
 import com.rodemark.entities.field.Cell;
 import com.rodemark.entities.field.WorldMap;
-import com.rodemark.entities.stationary.Carrot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -83,7 +79,7 @@ public class Action {
                     creature.makeMove(worldMap, Herbivore.class);
                 }
                 if (creature instanceof Herbivore) {
-                    creature.makeMove(worldMap, Carrot.class);
+                    creature.makeMove(worldMap, Vegetation.class);
                 }
             }
 
@@ -95,7 +91,7 @@ public class Action {
 
             if (typeOfMoving.equals("herbivores")) {
                 if (creature instanceof Herbivore) {
-                    creature.makeMove(worldMap, Carrot.class);
+                    creature.makeMove(worldMap, Vegetation.class);
                 }
             }
         }

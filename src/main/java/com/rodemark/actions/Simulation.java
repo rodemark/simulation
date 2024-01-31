@@ -64,48 +64,73 @@ public class Simulation {
     private void startMenu() {
         WorldMap worldMap = initMap();
         worldMap.printMap();
+
         int countIteration = 1;
+        int counterWithoutHerbivores = 0;
+        int counterWithoutFoodForHerbivores = 0;
 
         while (true) {
-            System.out.println("——————————————————————————————————");
-            System.out.println("1. Make a move with all creatures");
-            System.out.println("2. Make a move only by predators");
-            System.out.println("3. Make a move only by herbivores");
-            System.out.println("4. Generate a new map");
-            System.out.println("5. Exit");
-            System.out.println("——————————————————————————————————");
+            printStartMenu();
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             System.out.println("Amount iteration: " + countIteration);
             worldMap.printMap();
-
             switch (choice) {
                 case 1, 2, 3 -> {
+
                     if (!worldMap.existHerbivores()){
-                        System.out.println("Everyone died!");
-                        worldMap.removeAllPredators();
-                        worldMap.printMap();
-                        return;
+                        if (counterWithoutHerbivores == 2){
+                            System.out.println("Everyone died!");
+                            worldMap.removeAllPredators();
+                            worldMap.printMap();
+                            return;
+                        }
+                        counterWithoutHerbivores++;
                     }
+
+                    if (!worldMap.existFoodForHerbivores() & !worldMap.existPredators()){
+                        if (counterWithoutFoodForHerbivores == 2){
+                            System.out.println("Everyone died!");
+                            worldMap.removeAllHerbivores();
+                            worldMap.printMap();
+                            return;
+                        }
+                        counterWithoutFoodForHerbivores++;
+                    }
+
                     countIteration++;
 
                     Action action = new Action(worldMap);
                     action.moving(choice == 1 ? "all" : (choice == 2 ? "predators" : "herbivores"));
 
                 }
-                case 4 -> {
+
+                case 4 -> endlessSimulation(worldMap);
+
+                case 5 -> {
                     System.out.println("Generating a new map...");
                     worldMap = initMap();
                     worldMap.printMap();
                 }
-                case 5 -> {
+                case 6 -> {
                     return;
                 }
                 default -> System.out.println("Invalid choice. Please try again.");
             }
         }
+    }
+
+    private void printStartMenu(){
+        System.out.println("——————————————————————————————————");
+        System.out.println("1. Make a move with all creatures");
+        System.out.println("2. Make a move only by predators");
+        System.out.println("3. Make a move only by herbivores");
+        System.out.println("4. Start an endless simulation");
+        System.out.println("5. Generate a new map");
+        System.out.println("6. Exit");
+        System.out.println("——————————————————————————————————");
     }
 
     private WorldMap initMap(){
@@ -120,6 +145,48 @@ public class Simulation {
         action.spawning(Tree.class);
 
         return worldMap;
+    }
+
+    private void endlessSimulation(WorldMap worldMap){
+        int countIteration = 1;
+        int counterWithoutHerbivores = 0;
+        int counterWithoutFoodForHerbivores = 0;
+
+        while (true) {
+            System.out.println("Amount iteration: " + countIteration);
+            worldMap.printMap();
+
+            if (!worldMap.existHerbivores()){
+                if (counterWithoutHerbivores == 2){
+                    System.out.println("Everyone died!");
+                    worldMap.removeAllPredators();
+                    worldMap.printMap();
+                    return;
+                }
+                counterWithoutHerbivores++;
+            }
+
+            if (!worldMap.existFoodForHerbivores() & !worldMap.existPredators()){
+                if (counterWithoutFoodForHerbivores == 2){
+                    System.out.println("Everyone died!");
+                    worldMap.removeAllHerbivores();
+                    worldMap.printMap();
+                    return;
+                }
+                counterWithoutFoodForHerbivores++;
+            }
+
+            countIteration++;
+
+            Action action = new Action(worldMap);
+            action.moving("all");
+
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException err) {
+                err.getMessage();
+            }
+        }
     }
 
 }
