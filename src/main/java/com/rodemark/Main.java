@@ -7,6 +7,7 @@ public class Main {
         startGame();
     }
 
+
     public static void startGame(){
         Simulation simulation = new Simulation();
         simulation.mainMenu();

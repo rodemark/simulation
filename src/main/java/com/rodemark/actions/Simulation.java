@@ -12,6 +12,8 @@ import com.rodemark.entities.stationary.Tree;
 import java.util.HashMap;
 import java.util.Scanner;
 
+// TODO убрать дублирование кода
+
 public class Simulation {
     private final Scanner scanner = new Scanner(System.in);
     private int width = 10;
@@ -100,6 +102,13 @@ public class Simulation {
                         counterWithoutFoodForHerbivores++;
                     }
 
+                    if (!worldMap.existPath()){
+                        System.out.println("Everyone died!");
+                        worldMap.removeAllHerbivores();
+                        worldMap.printMap();
+                        return;
+                    }
+
                     countIteration++;
 
                     Action action = new Action(worldMap);
@@ -174,6 +183,13 @@ public class Simulation {
                     return;
                 }
                 counterWithoutFoodForHerbivores++;
+            }
+
+            if (!worldMap.existPath()){
+                System.out.println(" died!");
+                worldMap.removeAllHerbivores();
+                worldMap.printMap();
+                return;
             }
 
             countIteration++;

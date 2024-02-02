@@ -20,9 +20,9 @@ public abstract class Creature extends Entity {
 
     public void makeMove(WorldMap worldMap, Class <? extends Entity> targetType) {
         Entity nearestEntity = PathFinder.findNearestEntity(worldMap, this, targetType);
-
+        PathFinder pathFinder = new PathFinder();
         if (nearestEntity != null) {
-            List<Cell> path = PathFinder.findPath(worldMap, this, nearestEntity);
+            List<Cell> path = pathFinder.findPath(worldMap, this, nearestEntity);
 
             if (!path.isEmpty() && path.size() > 1) {
                 consume(worldMap, nearestEntity, path);

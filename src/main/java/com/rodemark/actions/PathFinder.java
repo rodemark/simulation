@@ -10,7 +10,7 @@ import java.util.*;
 public class PathFinder {
 
     // BFS
-    public static List<Cell> findPath(WorldMap worldMap, Entity startEntity, Entity endEntity) {
+    public List<Cell> findPath(WorldMap worldMap, Entity startEntity, Entity endEntity) {
         Cell startCell = startEntity.getPosition();
         Cell endCell = endEntity.getPosition();
 
@@ -49,7 +49,7 @@ public class PathFinder {
         return Collections.emptyList();
     }
 
-    private static List<Cell> getValidNeighbors(WorldMap worldMap, Cell cell, Set<Cell> visited, Class<? extends Entity> targetType) {
+    public List<Cell> getValidNeighbors(WorldMap worldMap, Cell cell, Set<Cell> visited, Class<? extends Entity> targetType) {
         List<Cell> neighbors = new ArrayList<>();
         int x = cell.x();
         int y = cell.y();
